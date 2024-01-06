@@ -24,7 +24,26 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Create .env file
+      run: |
+        touch .env
+        echo POSTGRES_PRISMA_URL=${{ secrets.POSTGRES_PRISMA_URL }} >> .env 
+        echo POSTGRES_URL_NON_POOLING=${{ secrets.POSTGRES_URL_NON_POOLING }} >> .env 
+        cat .env
+    - name: Create .env.local file
+      run: |
+        touch .env.local
+        echo NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }} >> .env.local 
+        echo CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }} >> .env.local 
+        echo NEXT_PUBLIC_CLERK_SIGN_IN_URL=${{ secrets.NEXT_PUBLIC_CLERK_SIGN_IN_URL }} >> .env.local 
+        echo NEXT_PUBLIC_CLERK_SIGN_UP_URL=${{ secrets.NEXT_PUBLIC_CLERK_SIGN_UP_URL }} >> .env.local 
+        echo NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_UR=${{ secrets.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_UR }} >> .env.local 
+        echo NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=${{ secrets.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL }} >> .env.local 
+        cat .env.local
    # - run: npm test
+    - name: Generate prisma client
+      run: npm run generate
     - run: npm install
     - run: npm run build --if-present
-    - run: npm run start
+    - name: Restart pm2
+      run: pm2 reload page-form --watch
