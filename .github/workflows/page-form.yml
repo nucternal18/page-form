@@ -40,10 +40,10 @@ jobs:
         echo NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_UR=${{ secrets.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_UR }} >> .env.local 
         echo NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=${{ secrets.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL }} >> .env.local 
         cat .env.local
-   # - run: npm test
+    # - run: npm test
+    - run: npm install
     - name: Generate prisma client
       run: npm run generate
-    - run: npm install
     - run: npm run build --if-present
     - name: Restart pm2
       run: pm2 reload page-form --watch
