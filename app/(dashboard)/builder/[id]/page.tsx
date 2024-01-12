@@ -15,11 +15,11 @@ export default async function BuilderPage({
     throw new Error("Form not found");
   }
   return (
-    <section className="space-y-3 p-3">
+    <section className="space-y-2 p-3 w-full">
       <Button variant={"outline"} asChild>
         <Link href="/">Go back</Link>
       </Button>
-      <FormBuilder />
+      <FormBuilder form={form} />
     </section>
   );
 }
