@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { getForm } from "@/actions/form";
+import { getFormById } from "@/actions/form";
 import { Button } from "@/components/ui/button";
 import FormBuilder from "@/components/form-builder";
 
@@ -10,7 +10,7 @@ export default async function BuilderPage({
   params: { id: string };
 }) {
   const { id } = params;
-  const form = await getForm(id);
+  const form = await getFormById(+id);
   if (!form) {
     throw new Error("Form not found");
   }

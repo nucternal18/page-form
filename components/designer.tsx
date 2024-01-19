@@ -14,7 +14,7 @@ import { idGenerator } from "@/lib/id-generator";
 import { DesignerElementWrapper } from "./designer-element-wrapper";
 
 export default function Designer() {
-  const { elements, addElement } = useDesigner();
+  const { elements, addElement, selectedElement, setSelectedElement } = useDesigner();
   const droppable = useDroppable({
     id: "designer-drop-area",
     data: {
@@ -38,7 +38,9 @@ export default function Designer() {
   });
   return (
     <div className="w-full h-full flex">
-      <div className="p-4 w-full">
+      <div className="p-4 w-full" onClick={() => {
+        if(selectedElement) setSelectedElement(null);
+      }}>
         <div
           ref={droppable.setNodeRef}
           className={cn(
@@ -51,13 +53,13 @@ export default function Designer() {
               Drop here
             </p>
           ) : null}
-          {droppable.isOver ? (
+          {droppable.isOver && elements.length === 0 ? (
             <div className="p-4 w-full">
               <div className="h-[120px] rounded-md bg-primary/20"></div>
             </div>
           ) : null}
           {elements.length > 0 ? (
-            <div className="flex flex-col gap-2 text-background p-4 w-full">
+            <div className="flex flex-col gap-2 p-4 w-full">
               {elements.map((element: FormElementInstance) => (
                 <DesignerElementWrapper key={element.id} element={element} />
               ))}
