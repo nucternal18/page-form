@@ -5,5 +5,5 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="flex w-full flex-grow mx-auto">{children}</div>;
+  return <section className="flex w-full flex-grow mx-auto items-center justify-center">{children}</section>;
 }
